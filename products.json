@@ -1,0 +1,16 @@
+[
+  {
+    "category": "Materas",
+    "title": "Zenith Black",
+    "description": "Matera para Suculenta, impresa en PLA premium",
+    "price": "10.000",
+    "image": "Images/Imagenes inventario/PlantPotSuculentBlackModel1.png"
+  },
+  {
+    "category": "Llaveros",
+    "title": "Teddy Bear",
+    "description": "Descripción aquí.",
+    "price": "$15",
+    "image": "otra-imagen.png"
+  }
+]

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <img class="logo"  >
+    <title>3DZ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>3DZ</h1>
+        <p>Descubre nuestros productos impresos en 3D de alta calidad</p>
+    </header>
+
+    <div class="container">
+        <!-- Sección de Galería de Imágenes -->
+        <section class="gallery">
+            <h2>Galería de Productos Destacados</h2>
+            <div class="carousel" id="carousel">
+                <img src="Images/Imagenes inventario/HeartBox.png" alt="Producto Destacado 1">
+                <img src="Images/Imagenes inventario/TeddyBearKeyChain.png" alt="Producto Destacado 2">
+                <img src="Images/Imagenes inventario/PlantPotSuculentBlackModel1.png" alt="Producto Destacado 3">
+                <img src="Images/Imagenes inventario/NikeRunningShoe.png" alt="Producto Destacado 4">
+            </div>
+            <div class="carousel-controls">
+                <button id="prev">&lt;</button>
+                <button id="next">&gt;</button>
+            </div>
+            <div class="indicators" id="indicators">
+                <div class="indicator active" data-slide="0"></div>
+                <div class="indicator" data-slide="1"></div>
+                <div class="indicator" data-slide="2"></div>
+                <div class="indicator" data-slide="3"></div>
+            </div>
+        </section>
+
+        <h2>Catálogos de Productos</h2>
+
+        <!-- Filtros por categoría -->
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">Todos</button>
+            <button class="filter-btn" data-category="figuritas">Figuritas</button>
+            <button class="filter-btn" data-category="Llaveros">Llaveros</button>
+            <button class="filter-btn" data-category="accesorios">Accesorios</button>
+        </div>
+
+        <div class="catalog" id="catalog">
+            <!-- Los productos se generan aquí -->
+        </div>
+
+        <script>
+            // Función para cargar y generar productos
+            async function cargarProductos() {
+                try {
+                    const response = await fetch('products.json'); // Asegúrate de que el archivo se llame 'products.json'
+                    const productos = await response.json();
+                    
+                    const catalog = document.getElementById('catalog'); // Corregido: 'catalog' en lugar de 'catalogo'
+                    
+                    productos.forEach(producto => {
+                        // Crea el div del producto
+                        const div = document.createElement('div');
+                        div.className = 'product';
+                        div.setAttribute('data-category', producto.category);
+                        div.setAttribute('data-title', producto.title);
+                        div.setAttribute('data-description', producto.description);
+                        div.setAttribute('data-price', producto.price);
+                        div.setAttribute('data-image', producto.image);
+                        
+                        // Agrega la imagen, título y descripción
+                        div.innerHTML = `
+                            <img src="${producto.image}" alt="${producto.title}">
+                            <h3>${producto.title}</h3>
+                            <p>${producto.description} Precio: ${producto.price}.</p>
+                        `;
+                        
+                        catalog.appendChild(div);
+                    });
+
+                    // Ahora que los productos están cargados, inicializa filtros y eventos
+                    inicializarFiltrosYEventos();
+                } catch (error) {
+                    console.error('Error cargando productos:', error);
+                }
+            }
+
+            // Función para inicializar filtros y eventos después de cargar productos
+            function inicializarFiltrosYEventos() {
+                const filterButtons = document.querySelectorAll('.filter-btn');
+                const products = document.querySelectorAll('.product');
+
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+
+                        const category = button.getAttribute('data-category');
+
+                        products.forEach(product => {
+                            if (category === 'all' || product.getAttribute('data-category') === category) {
+                                product.style.display = 'block';
+                            } else {
+                                product.style.display = 'none';
+                            }
+                        });
+                    });
+                });
+
+                // JavaScript para redirigir a página de producto
+                products.forEach(product => {
+                    product.addEventListener('click', () => {
+                        const title = encodeURIComponent(product.getAttribute('data-title'));
+                        const description = encodeURIComponent(product.getAttribute('data-description'));
+                        const price = encodeURIComponent(product.getAttribute('data-price'));
+                        const image = encodeURIComponent(product.getAttribute('data-image'));
+                        window.open(`product.html?title=${title}&description=${description}&price=${price}&image=${image}`, '_blank');
+                    });
+                });
+            }
+            
+            // Llama a la función al cargar la página
+            window.onload = cargarProductos;
+        </script>
+
+        <h2>¿Interesado? Contáctanos</h2>
+        <a href="https://wa.me/573180187501?text=Hola,%20estoy%20interesado%20en%20sus%20productos%20de%20impresión%203D"
+            class="whatsapp-link" target="_blank">
+            Enviar mensaje por WhatsApp
+        </a>
+    </div>
+
+    <script>
+        // JavaScript para el carrusel (sin cambios)
+        const carousel = document.getElementById('carousel');
+        const indicators = document.querySelectorAll('.indicator');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+        let currentSlide = 0;
+        const totalSlides = indicators.length;
+
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            indicators.forEach((ind, index) => {
+                ind.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        nextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        });
+
+        indicators.forEach(indicator => {
+            indicator.addEventListener('click', () => {
+                currentSlide = parseInt(indicator.getAttribute('data-slide'));
+                updateCarousel();
+            });
+        });
+
+        // Auto-play del carrusel
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }, 5000); // Cambia cada 5 segundos
+    </script>
+</body>
+</html>
