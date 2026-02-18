@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <img class="logo"  >
+    <title>3DZ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>3DZ</h1>
+        <p>Descubre nuestros productos impresos en 3D de alta calidad</p>
+    </header>
+
+    <div class="container">
+        <!-- Sección de Galería de Imágenes -->
+        <section class="gallery">
+            <h2>Galería de Productos Destacados</h2>
+            <div class="carousel" id="carousel">
+                <img src="Images/Imagenes inventario/HeartBox.png" alt="Producto Destacado 1">
+                <img src="Images/Imagenes inventario/TeddyBearKeyChain.png" alt="Producto Destacado 2">
+                <img src="Images/Imagenes inventario/PlantPotSuculentBlackModel1.png" alt="Producto Destacado 3">
+                <img src="Images/Imagenes inventario/NikeRunningShoe.png" alt="Producto Destacado 4">
+            </div>
+            <div class="carousel-controls">
+                <button id="prev">&lt;</button>
+                <button id="next">&gt;</button>
+            </div>
+            <div class="indicators" id="indicators">
+                <div class="indicator active" data-slide="0"></div>
+                <div class="indicator" data-slide="1"></div>
+                <div class="indicator" data-slide="2"></div>
+                <div class="indicator" data-slide="3"></div>
+            </div>
+        </section>
+
+        <h2>Catálogos de Productos</h2>
+
+        <!-- Filtros por categoría -->
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">Todos</button>
+            <button class="filter-btn" data-category="figuritas">Figuritas</button>
+            <button class="filter-btn" data-category="Llaveros">Llaveros</button>
+            <button class="filter-btn" data-category="accesorios">Accesorios</button>
+        </div>
+
+        <div class="catalog" id="catalog">
+            <div class="product" data-category="figuritas" data-title="Zenith Black"
+                data-description="Esta figurita es impresa en PLA de alta resolución, perfecta para regalos personalizados. Incluye detalles finos y colores vibrantes. Dimensiones: 10x10x15 cm. Tiempo de impresión: 4 horas."
+                data-price="$10" data-image="Images/Imagenes inventario/PlantPotSuculentBlackModel1.png">
+                <img src="Images/Imagenes inventario/PlantPotSuculentBlackModel1.png" alt="Modelo 1">
+                <h2>Zenith Black</h2>
+                <p>Matera para suculentas, Impresión en PLA premium. Ideal para regalos. </p>
+                <h2>$12.000 COP</h2>
+            </div>
+            <div class="product" data-category="Llaveros" data-title=""
+                data-description=""
+                data-price="$25" data-image="Images/Imagenes inventario/TeddyBearKeyChain.png">
+                <img src="Images/Imagenes inventario/TeddyBearKeyChain.png" alt="Modelo 2">
+                <h2>Teddy Love</h2>
+                <p>Llavero de Osito teddy con corazón, impreso en PLA-Bicolor</p>
+                <h2>$10.000 COP</h2>
+            </div>
+            <div class="product" data-category="accesorios" data-title="Accesorio para Casa"
+                data-description="Accesorio ergonómico en PETG, fácil de limpiar y resistente al agua. Ideal para organización en el hogar. Dimensiones: 15x10x5 cm. Tiempo de impresión: 3 horas."
+                data-price="$15" data-image="https://via.placeholder.com/300x200?text=Modelo+3">
+                <img src="https://via.placeholder.com/300x200?text=Modelo+3" alt="Modelo 3">
+                <h3>Accesorio para Casa</h3>
+                <p>Diseño ergonómico en PETG. Fácil de limpiar. Precio: $15.</p>
+            </div>
+            <div class="product" data-category="figuritas" data-title="Figurita de Acción"
+                data-description="Figurita coleccionable con detalles finos en PLA. Perfecta para fans de la acción. Dimensiones: 8x8x12 cm. Tiempo de impresión: 5 horas."
+                data-price="$12" data-image="https://via.placeholder.com/300x200?text=Modelo+4">
+                <img src="https://via.placeholder.com/300x200?text=Modelo+4" alt="Modelo 4">
+                <h3>Figurita de Acción</h3>
+                <p>Detalles finos en PLA. Coleccionable. Precio: $12.</p>
+            </div>
+            <div class="product" data-category="prototipos" data-title="Modelo Arquitectónico"
+                data-description="Modelo a escala 1:100 en ABS, ideal para presentaciones arquitectónicas. Incluye bases estables. Dimensiones: 30x20x15 cm. Tiempo de impresión: 8 horas."
+                data-price="$30" data-image="https://via.placeholder.com/300x200?text=Modelo+5">
+                <img src="https://via.placeholder.com/300x200?text=Modelo+5" alt="Modelo 5">
+                <h3>Modelo Arquitectónico</h3>
+                <p>Escala 1:100 en ABS. Para presentaciones. Precio: $30.</p>
+            </div>
+        </div>
+
+        <h2>¿Interesado? Contáctanos</h2>
+        <a href="https://wa.me/573180187501?text=Hola,%20estoy%20interesado%20en%20sus%20productos%20de%20impresión%203D"
+            class="whatsapp-link" target="_blank">
+            Enviar mensaje por WhatsApp
+        </a>
+    </div>
+
+    <script>
+        // JavaScript para filtros
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const products = document.querySelectorAll('.product');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const category = button.getAttribute('data-category');
+
+                products.forEach(product => {
+                    if (category === 'all' || product.getAttribute('data-category') === category) {
+                        product.style.display = 'block';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // JavaScript para redirigir a página de producto
+        products.forEach(product => {
+            product.addEventListener('click', () => {
+                const title = encodeURIComponent(product.getAttribute('data-title'));
+                const description = encodeURIComponent(product.getAttribute('data-description'));
+                const price = encodeURIComponent(product.getAttribute('data-price'));
+                const image = encodeURIComponent(product.getAttribute('data-image'));
+                window.open(`product.html?title=${title}&description=${description}&price=${price}&image=${image}`, '_blank');
+            });
+        });
+
+        // JavaScript para el carrusel
+        const carousel = document.getElementById('carousel');
+        const indicators = document.querySelectorAll('.indicator');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+        let currentSlide = 0;
+        const totalSlides = indicators.length;
+
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            indicators.forEach((ind, index) => {
+                ind.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        nextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        });
+
+        indicators.forEach(indicator => {
+            indicator.addEventListener('click', () => {
+                currentSlide = parseInt(indicator.getAttribute('data-slide'));
+                updateCarousel();
+            });
+        });
+
+        // Auto-play del carrusel
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }, 5000); // Cambia cada 5 segundos
+
+        //Servidor de local host
+
+    </script>
+</body>
+
+</html>
