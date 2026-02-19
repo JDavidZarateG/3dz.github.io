@@ -30,6 +30,7 @@
     "category": "llaveros",
     "title": "Llavero Runner Style",
     "short_description": "Llavero detallado inspirado en calzado deportivo, ligero y resistente para el día a día.",
+    "large_description": "<p>Un accesorio detallado que simula la estructura de un calzado deportivo con un diseño de malla calada. Es ligero, resistente y muestra la capacidad de detalle en piezas pequeñas.</p><ul><li><strong>Material:</strong> PLA de alta resistencia.</li><li><strong>Detalle:</strong> Logotipo en contraste negro sobre estructura roja.</li><li><strong>Uso ideal:</strong> Merchandising o regalo para entusiastas del running.</li></ul>",
     "price": "5.000",
     "stock": 10,
     "image": "Images/Inventory/NikeRunningShoe.png"
