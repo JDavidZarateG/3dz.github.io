@@ -13,7 +13,7 @@
     "title": "Llavero Teddy Bear",
     "short_description": "Tierno oso decorativo impreso con un gradiente de color cálido y un corazón entre sus manos.",
     "large_description": "<p>Este tierno diseño combina la nostalgia de un oso clásico con una estética moderna. Su acabado en gradiente resalta cada detalle del relieve, desde las texturas de las patas hasta el corazón que sostiene.</p><ul><li><strong>Material:</strong> PLA Silk (Seda) con efecto gradiente bicolor.</li><li><strong>Acabado:</strong> Brillo sedoso con transición de color suave.</li><li><strong>Uso ideal:</strong> Accesorio para llaves, decoración de bolsos o regalo personalizado.</li></ul>",
-    "price": "$10.000",
+    "price": "10.000",
     "stock": 2,
     "image": "Images/Inventory/TeddyBearKeyChain.png"
   },
@@ -22,7 +22,7 @@
     "title": "Rosa Custom Box",
     "short_description": "Joyero personalizado con nombre en relieve y detalle de rosa en 3D",
     "large_description": "<p>Un diseño funcional y emocional. Este cofre cuenta con una tapa de encaje perfecto, ideal para regalos personalizados o para guardar objetos de valor con un toque especial.</p><ul><li><strong>Material:</strong> PLA Rojo vibrante.</li><li><strong>Personalización:</strong> Disponible con nombres o relieves (como el modelo con rosa).</li><li><strong>Uso ideal:</strong> Joyero, empaque de regalo o decoración de San Valentín.</li></ul>",
-    "price": "$30.000",
+    "price": "30.000",
     "stock": 10,
     "image": "Images/Inventory/HeartBox.png"
   },

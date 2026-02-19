@@ -58,28 +58,24 @@
             <!-- Los productos se generan aquí -->
         </div>
 
-        <script>
+       <script>
     // Carrito global
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let productosData = []; // Guardar productos aquí
 
     // Función para cargar y generar productos
     async function cargarProductos() {
         try {
             const response = await fetch('products.json');
-            const productos = await response.json();
+            productosData = await response.json(); // Guardar datos
             
             const catalog = document.getElementById('catalog');
             
-            productos.forEach(producto => {
+            productosData.forEach((producto, index) => {
                 const div = document.createElement('div');
                 div.className = 'product';
                 div.setAttribute('data-category', producto.category);
-                div.setAttribute('data-title', producto.title);
-                div.setAttribute('data-short_description', producto.short_description);
-                div.setAttribute('data-large_description', producto.large_description);
-                div.setAttribute('data-price', producto.price);
-                div.setAttribute('data-stock', producto.stock);
-                div.setAttribute('data-image', producto.image);
+                div.setAttribute('data-index', index); // Usar índice
                 
                 // Verificar stock
                 const stockClass = producto.stock > 0 ? 'in-stock' : 'out-of-stock';
@@ -91,12 +87,12 @@
                     <p>${producto.short_description}</p>
                     <h2>Precio: ${producto.price} COP</h2>
                     <p class="stock ${stockClass}">${stockText}</p>
-                    <div class="quantity-controls" data-id="${producto.title}">
-                        <button class="qty-btn minus" onclick="changeQty('${producto.title}', -1)">-</button>
-                        <span class="qty-display" id="qty-${producto.title.replace(/\s/g, '')}">1</span>
-                        <button class="qty-btn plus" onclick="changeQty('${producto.title}', 1)">+</button>
+                    <div class="quantity-controls">
+                        <button class="qty-btn minus" onclick="changeQty(${index}, -1)">-</button>
+                        <span class="qty-display" id="qty-${index}">1</span>
+                        <button class="qty-btn plus" onclick="changeQty(${index}, 1)">+</button>
                     </div>
-                    <button class="add-to-cart" onclick="addToCart('${producto.title}', ${producto.price}, '${producto.image}', ${producto.stock})" ${producto.stock === 0 ? 'disabled' : ''}>
+                    <button class="add-to-cart" onclick="addToCart(${index})" ${producto.stock === 0 ? 'disabled' : ''}>
                         ${producto.stock > 0 ? 'Añadir al Carrito' : 'Agotado'}
                     </button>
                 `;
@@ -111,14 +107,15 @@
         }
     }
 
-    // Cambiar cantidad
-    function changeQty(title, change) {
-        const qtyDisplay = document.getElementById(`qty-${title.replace(/\s/g, '')}`);
-        let currentQty = parseInt(qtyDisplay.textContent);
+    // Cambiar cantidad usando índice
+    function changeQty(index, change) {
+        const producto = productosData[index];
+        const qtyDisplay = document.getElementById(`qty-${index}`);
         
-        // Encontrar el stock del producto
-        const productElement = document.querySelector(`[data-title="${title}"]`);
-        const stock = parseInt(productElement.getAttribute('data-stock'));
+        if (!qtyDisplay || !producto) return;
+        
+        let currentQty = parseInt(qtyDisplay.textContent);
+        const stock = producto.stock;
         
         const newQty = currentQty + change;
         
@@ -127,10 +124,13 @@
         }
     }
 
-    // Añadir al carrito
-    function addToCart(title, price, image, stock) {
-        const qtyDisplay = document.getElementById(`qty-${title.replace(/\s/g, '')}`);
+    // Añadir al carrito usando índice
+    function addToCart(index) {
+        const producto = productosData[index];
+        const qtyDisplay = document.getElementById(`qty-${index}`);
         const quantity = parseInt(qtyDisplay.textContent);
+        
+        const { title, price, image, stock } = producto;
         
         // Buscar si ya existe en el carrito
         const existingItem = cart.find(item => item.title === title);
@@ -188,6 +188,25 @@
                         product.style.display = 'none';
                     }
                 });
+            });
+        });
+
+        // Evento click para ir a detalles del producto
+        products.forEach(product => {
+            product.addEventListener('click', (e) => {
+                if (e.target.classList.contains('qty-btn') || e.target.classList.contains('add-to-cart')) {
+                    return;
+                }
+                
+                const index = product.getAttribute('data-index');
+                const p = productosData[index];
+                
+                const title = encodeURIComponent(p.title);
+                const description = encodeURIComponent(p.large_description);
+                const price = encodeURIComponent(p.price);
+                const image = encodeURIComponent(p.image);
+                
+                window.location.href = `product.html?title=${title}&large_description=${description}&price=${price}&image=${image}`;
             });
         });
     }
